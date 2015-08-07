@@ -42,7 +42,7 @@ It was the worst of times.
 }
     assert_equal 54, long_string.length
     assert_equal 3, long_string.lines.count
-    assert_equal "\n", long_string[0,1] #first two characters in the string
+    assert_equal "\n", long_string[0,1] #first character in the string
   end
 
   def test_here_documents_can_also_handle_multiple_lines
@@ -50,29 +50,29 @@ It was the worst of times.
 It was the best of times,
 It was the worst of times.
 EOS
-    assert_equal __, long_string.length
-    assert_equal __, long_string.lines.count
-    assert_equal __, long_string[0,1]
+    assert_equal 53, long_string.length
+    assert_equal 2, long_string.lines.count
+    assert_equal "I", long_string[0,1]
   end
 
   def test_plus_will_concatenate_two_strings
     string = "Hello, " + "World"
-    assert_equal __, string
+    assert_equal "Hello, World", string
   end
 
   def test_plus_concatenation_will_leave_the_original_strings_unmodified
     hi = "Hello, "
     there = "World"
     string = hi + there
-    assert_equal __, hi
-    assert_equal __, there
+    assert_equal "Hello, ", hi
+    assert_equal "World", there
   end
 
   def test_plus_equals_will_concatenate_to_the_end_of_a_string
     hi = "Hello, "
     there = "World"
     hi += there
-    assert_equal __, hi
+    assert_equal "Hello, World", hi
   end
 
   def test_plus_equals_also_will_leave_the_original_string_unmodified
@@ -80,15 +80,16 @@ EOS
     hi = original_string
     there = "World"
     hi += there
-    assert_equal __, original_string
+    assert_equal "Hello, ", original_string # += operator does not modify original string 9
+                                            # because it creates a new object
   end
 
   def test_the_shovel_operator_will_also_append_content_to_a_string
     hi = "Hello, "
     there = "World"
     hi << there
-    assert_equal __, hi
-    assert_equal __, there
+    assert_equal "Hello, World", hi
+    assert_equal "World", there
   end
 
   def test_the_shovel_operator_modifies_the_original_string
@@ -96,7 +97,7 @@ EOS
     hi = original_string
     there = "World"
     hi << there
-    assert_equal __, original_string
+    assert_equal "Hello, World", original_string #shovel operator modifies the original string
 
     # THINK ABOUT IT:
     #
