@@ -20,8 +20,8 @@ class AboutObjects < Neo::Koan
   end
 
   def test_every_object_has_an_id
-    obj = Object.new
-    assert_equal __, obj.object_id.class
+    obj = Object.new               
+    assert_equal Fixnum, obj.object_id.class
   end
 
   def test_every_object_has_different_id
