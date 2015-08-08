@@ -40,6 +40,7 @@ class AboutRegularExpressions < Neo::Koan
   # We say that the repetition operators above are "greedy."
   #
   # Why?
+  # it will only fail if you have something before or after it that doesn't match :)
 
   # ------------------------------------------------------------------
 
