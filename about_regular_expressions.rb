@@ -111,13 +111,13 @@ class AboutRegularExpressions < Neo::Koan
   end
 
   def test_slash_b_anchors_to_a_word_boundary
-    assert_equal "vines", "bovine vines"[/\bvine./] #anchors to the beginning of word 
+    assert_equal "vines", "bovine vines"[/\bvine./] #anchors to the beginning of word
   end
 
   # ------------------------------------------------------------------
 
   def test_parentheses_group_contents
-    assert_equal __, "ahahaha"[/(ha)+/]
+    assert_equal "hahaha", "ahahaha"[/(ha)+/]
   end
 
   # ------------------------------------------------------------------
