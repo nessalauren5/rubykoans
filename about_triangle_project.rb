@@ -4,6 +4,31 @@ require File.expand_path(File.dirname(__FILE__) + '/neo')
 require './triangle'
 
 class AboutTriangleProject < Neo::Koan
+
+  def triangle(one, two, three)
+  onetwo = one == two
+  twothree = two == three
+  onethree = one == three
+
+  results = [onetwo, twothree,onethree]
+
+  count = 0
+  for result in results
+    if result
+      count+=1
+    end
+  end
+
+  case count
+  when 0
+    :scalene
+  when 1
+    :isosceles
+  else
+    :equilateral
+  end
+
+end
   def test_equilateral_triangles_have_equal_sides
     assert_equal :equilateral, triangle(2, 2, 2)
     assert_equal :equilateral, triangle(10, 10, 10)
