@@ -5,6 +5,11 @@ require './triangle.rb'
 
 class AboutTriangleProject2 < Neo::Koan
   # The first assignment did not talk about how to handle errors.
+  def triangle(one, two, three)
+
+    raise TriangleError
+
+end
   # Let's handle that part now.
   def test_illegal_triangles_throw_exceptions
     assert_raise(TriangleError) do triangle(0, 0, 0) end
