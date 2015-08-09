@@ -80,7 +80,7 @@ class AboutMessagePassing < Neo::Koan
   def test_sending_undefined_messages_to_a_typical_object_results_in_errors
     typical = TypicalObject.new
 
-    exception = assert_raise(___) do
+    exception = assert_raise(NoMethodError) do
       typical.foobar
     end
     assert_match(/foobar/, exception.message)
@@ -89,7 +89,7 @@ class AboutMessagePassing < Neo::Koan
   def test_calling_method_missing_causes_the_no_method_error
     typical = TypicalObject.new
 
-    exception = assert_raise(___) do
+    exception = assert_raise(NoMethodError) do
       typical.method_missing(:foobar)
     end
     assert_match(/foobar/, exception.message)
@@ -98,7 +98,7 @@ class AboutMessagePassing < Neo::Koan
     #
     # If the method :method_missing causes the NoMethodError, then
     # what would happen if we redefine method_missing?
-    #
+    # If redefined the error may not be thrown
     # NOTE:
     #
     # In Ruby 1.8 the method_missing method is public and can be
@@ -123,9 +123,9 @@ class AboutMessagePassing < Neo::Koan
   def test_all_messages_are_caught
     catcher = AllMessageCatcher.new
 
-    assert_equal __, catcher.foobar
-    assert_equal __, catcher.foobaz(1)
-    assert_equal __, catcher.sum(1,2,3,4,5,6)
+    assert_equal "Someone called foobar with <>", catcher.foobar
+    assert_equal "Someone called foobaz with <1>", catcher.foobaz(1)
+    assert_equal "Someone called sum with <1, 2, 3, 4, 5, 6>", catcher.sum(1,2,3,4,5,6)
   end
 
   def test_catching_messages_makes_respond_to_lie
@@ -134,7 +134,7 @@ class AboutMessagePassing < Neo::Koan
     assert_nothing_raised do
       catcher.any_method
     end
-    assert_equal __, catcher.respond_to?(:any_method)
+    assert_equal false, catcher.respond_to?(:any_method)
   end
 
   # ------------------------------------------------------------------
@@ -152,14 +152,14 @@ class AboutMessagePassing < Neo::Koan
   def test_foo_method_are_caught
     catcher = WellBehavedFooCatcher.new
 
-    assert_equal __, catcher.foo_bar
-    assert_equal __, catcher.foo_baz
+    assert_equal "Foo to you too", catcher.foo_bar
+    assert_equal "Foo to you too", catcher.foo_baz
   end
 
   def test_non_foo_messages_are_treated_normally
     catcher = WellBehavedFooCatcher.new
 
-    assert_raise(___) do
+    assert_raise(NoMethodError) do
       catcher.normal_undefined_method
     end
   end
