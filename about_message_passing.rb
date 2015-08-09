@@ -25,24 +25,26 @@ class AboutMessagePassing < Neo::Koan
 
     assert mc.send("caught?")
     assert mc.send("caught" + "?")    # What do you need to add to the first string?
-    assert mc.send("CAUGHT?".downcase )      # What would you need to do to the string?
+    assert mc.send("CAUGHT?".downcase)      # What would you need to do to the string?
   end
 
   def test_send_with_underscores_will_also_send_messages
     mc = MessageCatcher.new
 
-    assert_equal __, mc.__send__(:caught?)
+    assert_equal true, mc.__send__(:caught?)
 
     # THINK ABOUT IT:
     #
     # Why does Ruby provide both send and __send__ ?
+    # use __send__, because it won't (it shouldn't) be overriden. Using __send__ is especially useful in metaprogramming,
+    #  when you don't know what methods the class being manipulated defines. It could have overriden send.
   end
 
   def test_classes_can_be_asked_if_they_know_how_to_respond
     mc = MessageCatcher.new
 
-    assert_equal __, mc.respond_to?(:caught?)
-    assert_equal __, mc.respond_to?(:does_not_exist)
+    assert_equal true, mc.respond_to?(:caught?)
+    assert_equal false, mc.respond_to?(:does_not_exist)
   end
 
   # ------------------------------------------------------------------
@@ -56,11 +58,11 @@ class AboutMessagePassing < Neo::Koan
   def test_sending_a_message_with_arguments
     mc = MessageCatcher.new
 
-    assert_equal __, mc.add_a_payload
-    assert_equal __, mc.send(:add_a_payload)
+    assert_equal [], mc.add_a_payload
+    assert_equal [], mc.send(:add_a_payload)
 
-    assert_equal __, mc.add_a_payload(3, 4, nil, 6)
-    assert_equal __, mc.send(:add_a_payload, 3, 4, nil, 6)
+    assert_equal [3,4,nil,6], mc.add_a_payload(3, 4, nil, 6)
+    assert_equal [3,4,nil,6], mc.send(:add_a_payload, 3, 4, nil, 6)
   end
 
   # NOTE:
